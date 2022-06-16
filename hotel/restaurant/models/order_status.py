@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Status(models.Model):
+class OrderStatus(models.Model):
     name = models.CharField(max_length=50, verbose_name='Статус')
 
     class Meta:
