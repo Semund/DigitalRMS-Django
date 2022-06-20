@@ -2,3 +2,4 @@ venv/
 .idea
 __pycache__
 /design/
+/hotel/hotel/settings_local.py
