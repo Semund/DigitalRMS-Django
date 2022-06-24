@@ -20,32 +20,32 @@
 <body>
   <header class="bgcolor-blue">
     <div class="container">
-      <nav class="navbar navbar-dark navbar-expand-lg bgcolor-blue">
-      <div class="container-fluid">
-        <a class="navbar-brand text-white" href="{% url 'index' %}">
-          <strong>Hotel simulation</strong>
-        </a>
-        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link text-white" aria-current="page" href="#">Guest registration</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#">Room automation</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#">Food delivery</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-white" href="#">Admin panel</a>
-            </li>
-          </ul>
+      <nav class="navbar navbar-dark navbar-expand-lg bgcolor-blue mb-4">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="{% url 'index' %}">
+            <strong>Hotel simulation</strong>
+          </a>
+          <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link text-white" aria-current="page" href="{% url 'checkin' %}">Регистрация гостя</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#">Автоматизация номера</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#">Доставка еды</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#">Панель управления</a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
     </nav>
     </div>
   </header>
