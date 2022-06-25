@@ -4,67 +4,46 @@
   {% csrf_token %}
   <form class="row g-3" method="post">
     <h2 class="text-center">Данные гостя</h2>
-    <div class="col-lg-4">
-      <label for="{{ form_guest.first_name.id_for_label }}" class="form-label">{{ form_guest.first_name.label }}</label>
-      <input type="text" class="form-control" id="{{ form_guest.first_name.id_for_label }}" placeholder="Иван">
-    </div>
-    <div class="col-lg-4">
-      <label for="{{ form_guest.last_name.id_for_label }}" class="form-label">{{ form_guest.last_name.label }}</label>
-      <input type="text" class="form-control" id="{{ form_guest.last_name.id_for_label }}" placeholder="Иванов">
-    </div>
-    <div class="col-lg-4">
-      <label for="{{ form_guest.additional_name.id_for_label }}"
-             class="form-label">{{ form_guest.additional_name.label }}</label>
-      <input type="text" class="form-control" id="{{ form_guest.additional_name.id_for_label }}" placeholder="Иванович">
-    </div>
-    <div class="col-lg-1"></div>
-    <div class="col-lg-2">
-      <label for="{{ form_guest.passport_number.id_for_label }}"
-             class="form-label">{{ form_guest.passport_number.label }}</label>
-      <input type="tel" maxlength="12" class="form-control" id="{{ form_guest.passport_number.id_for_label }}"
-             placeholder="99 99 999999">
-    </div>
-    <div class="col-lg-2">
-      <label for="{{ form_guest.birth_date.id_for_label }}"
-             class="form-label">{{ form_guest.birth_date.label }}</label>
-      <input type="date" max="9999-12-12" class="form-control" id="{{ form_guest.birth_date.id_for_label }}">
-    </div>
-    <div class="col-lg-2">
-      <label for="{{ form_guest.phone.id_for_label }}" title="В международном формате, начиная с +"
-             class="form-label">{{ form_guest.phone.label }}</label>
-      <input type="tel" maxlength="16" class="form-control" id="{{ form_guest.phone.id_for_label }}"
-             placeholder="+7 999 999 99 99">
-    </div>
-    <div class="col-lg-4">
-      <label for="{{ form_guest.email.id_for_label }}"
-             class="form-label">{{ form_guest.email.label }}</label>
-      <input type="email" class="form-control" id="{{ form_guest.email.id_for_label }}" placeholder="example@email.com">
-    </div>
-    <div class="col-lg-1"></div>
+
+    {% for field in form_guest %}
+      {% if field.name == 'first_name' or field.name == 'last_name' or field.name == 'additional_name' or field.name == 'email'%}
+        <div class="col-lg-4">
+          <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+          {{ field.as_widget }}
+        </div>
+      {% else %}
+        <div class="col-lg-2">
+          <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+          {{ field.as_widget }}
+        </div>
+      {% endif %}
+    {% endfor %}
+
     <hr class="">
+
     <h2 class="text-center">Данные проживания</h2>
+
     <div class="col-lg-3"></div>
-    <div class="col-lg-2">
-      <label for="{{ form_booking.checkin_date.id_for_label }}"
-             class="form-label">{{ form_booking.checkin_date.label }}</label>
-      <input type="date" max="9999-12-12" class="form-control" id="{{ form_booking.checkin_date.id_for_label }}">
-    </div>
-    <div class="col-lg-2">
-      <label for="{{ form_booking.checkout_date.id_for_label }}"
-             class="form-label">{{ form_booking.checkout_date.label }}</label>
-      <input type="date" max="9999-12-12" class="form-control" id="{{ form_booking.checkout_date.id_for_label }}">
-    </div>
+    {% for field in form_booking %}
+      <div class="col-lg-2">
+        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+          {{ field.as_widget }}
+      </div>
+    {% endfor %}
+
     <div class="col-lg-2">
       <label for="{{ form_room.number.id_for_label }}"
              class="form-label">{{ form_room.number.label }}</label>
-      <select id="{{ form_room.number.id_for_label }}" class="form-control">
-        <option selected>Выберите номер...</option>
+      <input type="text" list="rooms" id="{{ form_room.number.id_for_label }}" class="form-control">
+      <datalist id="rooms">
         {% for room in room_list %}
         <option>{{ room.number }}</option>
         {% endfor %}
-      </select>
+      </datalist>
     </div>
+
     <div class="col-lg-3"></div>
+
     <div class="col-12 text-center">
       <button type="submit" class="btn btn-primary bgcolor-blue mt-3">Зарегистрировать гостя</button>
     </div>
