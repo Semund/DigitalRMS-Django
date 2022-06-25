@@ -17,7 +17,13 @@
              class="form-label">{{ form_guest.additional_name.label }}</label>
       <input type="text" class="form-control" id="{{ form_guest.additional_name.id_for_label }}" placeholder="Иванович">
     </div>
-    <div class="col-lg-2"></div>
+    <div class="col-lg-1"></div>
+    <div class="col-lg-2">
+      <label for="{{ form_guest.passport_number.id_for_label }}"
+             class="form-label">{{ form_guest.passport_number.label }}</label>
+      <input type="tel" maxlength="12" class="form-control" id="{{ form_guest.passport_number.id_for_label }}"
+             placeholder="99 99 999999">
+    </div>
     <div class="col-lg-2">
       <label for="{{ form_guest.birth_date.id_for_label }}"
              class="form-label">{{ form_guest.birth_date.label }}</label>
@@ -34,7 +40,7 @@
              class="form-label">{{ form_guest.email.label }}</label>
       <input type="email" class="form-control" id="{{ form_guest.email.id_for_label }}" placeholder="example@email.com">
     </div>
-    <div class="col-lg-2"></div>
+    <div class="col-lg-1"></div>
     <hr class="">
     <h2 class="text-center">Данные проживания</h2>
     <div class="col-lg-3"></div>
