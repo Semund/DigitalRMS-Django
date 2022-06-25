@@ -24,7 +24,6 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
         fields = ('checkin_date', 'checkout_date')
-
         widgets = {
             'checkin_date': forms.DateInput(attrs={'max': "9999-12-12", 'class': 'form-control', 'type': 'date'}),
             'checkout_date': forms.DateInput(attrs={'max': "9999-12-12", 'class': 'form-control', 'type': 'date'}),
@@ -35,3 +34,7 @@ class RoomForm(forms.ModelForm):
     class Meta:
         model = Room
         fields = ('number',)
+
+        widgets = {
+            'number': forms.NumberInput(attrs={'max': 9999, 'class': 'form-control'})
+        }

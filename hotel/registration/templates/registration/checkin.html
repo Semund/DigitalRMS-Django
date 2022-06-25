@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% csrf_token %}
-  <form class="row g-3" method="post">
+  <form class="row g-3" method="post" action="{% url 'checkin' %}">
+    {% csrf_token %}
     <h2 class="text-center">Данные гостя</h2>
+    <div class="form-error col-lg-12">
+      {{ form_guest.non_field_errors }}
+    </div>
 
     {% for field in form_guest %}
       {% if field.name == 'first_name' or field.name == 'last_name' or field.name == 'additional_name' or field.name == 'email'%}
         <div class="col-lg-4">
+          <div class="form-error">{{ field.errors }}</div>
           <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
           {{ field.as_widget }}
         </div>
       {% else %}
         <div class="col-lg-2">
+          <div class="form-error">{{ field.errors }}</div>
           <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
           {{ field.as_widget }}
         </div>
@@ -22,25 +27,24 @@
     <hr class="">
 
     <h2 class="text-center">Данные проживания</h2>
+    <div class="form-error col-lg-12">
+      {{ form_room.number.errors }}
+    </div>
 
     <div class="col-lg-3"></div>
+
     {% for field in form_booking %}
       <div class="col-lg-2">
+        <div class="form-error">{{ field.errors }}</div>
         <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
           {{ field.as_widget }}
       </div>
     {% endfor %}
 
-    <div class="col-lg-2">
-      <label for="{{ form_room.number.id_for_label }}"
-             class="form-label">{{ form_room.number.label }}</label>
-      <input type="text" list="rooms" id="{{ form_room.number.id_for_label }}" class="form-control">
-      <datalist id="rooms">
-        {% for room in room_list %}
-        <option>{{ room.number }}</option>
-        {% endfor %}
-      </datalist>
-    </div>
+      <div class="col-lg-2">
+        <label for="{{ form_room.number.id_for_label }}" class="form-label">{{ form_room.number.label }}</label>
+          {{ form_room.number.as_widget }}
+      </div>
 
     <div class="col-lg-3"></div>
 
