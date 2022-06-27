@@ -1,51 +1,32 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
+from django.views.generic import TemplateView
 
-from .forms import GuestForm, BookingForm, RoomForm
-from .models import Booking
-from .registration_services import *
-
-
-# Create your views here.
+from .forms import GuestForm, BookingForm
 
 
-def _get_checkin_context():
-    form_guest = GuestForm()
-    form_booking = BookingForm()
-    form_room = RoomForm()
-    context = {
-        'page_title': 'Checkin',
-        'form_guest': form_guest,
-        'form_booking': form_booking,
-        'form_room': form_room
-    }
+class CheckinView(TemplateView):
+    template_name = 'registration/checkin.html'
+    booking_form_class = BookingForm
+    guest_form_class = GuestForm
 
-    return context
+    def post(self, request, *args, **kwargs):
+        post_data = request.POST or None
+        form_booking = self.booking_form_class(post_data, prefix='booking')
+        form_guest = self.guest_form_class(post_data, prefix='guest')
 
+        context = self.get_context_data(form_booking=form_booking, form_guest=form_guest)
 
-def _update_checkin_context(context, form_guest, form_booking, form_room):
-    context['form_guest'] = form_guest
-    context['form_booking'] = form_booking
-    context['form_room'] = form_room
-    return context
-
-
-def checkin(request):
-    context = _get_checkin_context()
-    if request.method == 'POST':
-        form_guest = process_guest_data(request.POST)
-        form_booking = process_booking_data(request.POST)
-        form_room = process_room_data(request.POST)
-        context = _update_checkin_context(context, form_guest, form_booking, form_room)
-        if check_all_registration_data(form_room, form_booking, form_room):
-            guest_id = form_guest.save().id
-            room_id = form_room.save().id
-            new_booking = Booking(
-                checkin_date=form_booking.data['checkin_date'],
-                checkout_date=form_booking.data['checkout_date'],
-                guest_id=guest_id,
-                room_id=room_id
-            )
-            new_booking.save()
+        if form_booking.is_valid() and form_guest.is_valid():
+            self.form_save(form_booking, form_guest)
             return redirect('home')
 
-    return render(request, 'registration/checkin.html', context=context)
+        return self.render_to_response(context)
+
+    def form_save(self, form_booking, form_guest):
+        guest = form_guest.save()
+        booking = form_booking.save()
+        booking.guests.add(guest)
+
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)

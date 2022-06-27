@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import inlineformset_factory
 
 from .models import Booking, Guest, Room
 
@@ -21,20 +22,16 @@ class GuestForm(forms.ModelForm):
 
 
 class BookingForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['room'].empty_label = 'Номер не выбран'
+
     class Meta:
         model = Booking
-        fields = ('checkin_date', 'checkout_date')
+        fields = ('checkin_date', 'checkout_date', 'room')
         widgets = {
             'checkin_date': forms.DateInput(attrs={'max': "9999-12-12", 'class': 'form-control', 'type': 'date'}),
             'checkout_date': forms.DateInput(attrs={'max': "9999-12-12", 'class': 'form-control', 'type': 'date'}),
+            'room': forms.Select(attrs={'class': 'form-control', 'type': 'text'}, choices=tuple(Room.objects.all()))
         }
 
-
-class RoomForm(forms.ModelForm):
-    class Meta:
-        model = Room
-        fields = ('number',)
-
-        widgets = {
-            'number': forms.NumberInput(attrs={'max': 9999, 'class': 'form-control'})
-        }
