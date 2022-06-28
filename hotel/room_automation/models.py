@@ -2,8 +2,11 @@ from django.db import models
 
 
 # Create your models here.
+from registration.models import Room
+
+
 class RoomAutomation(models.Model):
-    room_number = models.IntegerField(verbose_name='Номер')
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, verbose_name='Номер')
     light = models.JSONField(verbose_name='Свет')
     climat = models.JSONField(verbose_name='Климат')
 
