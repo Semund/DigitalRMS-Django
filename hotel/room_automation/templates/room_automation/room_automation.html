@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
-
 {% block content %}
   <form class="row g-3" id="room_select" method="post" action="{% url 'room' %}">
-  {% csrf_token %}
+{#  {% csrf_token %}#}
     <div class="col-lg-2">
       <label for="{{ room_select.room.id_for_label }}" class="form-label">{{ room_select.room.label }}</label>
         {{ room_select.room.as_widget }}
@@ -10,60 +9,109 @@
     <hr class="mt-3 mb-3">
   </form>
 
-  <div class="row">
-    <h3 class="text-center mb-4" id="room_number">Номер 501</h3>
+  <p class="d-none" id="error_msg"></p>
+  <div class="row d-none" id="room_content">
+    <h3 class="text-center mb-4" id="room_number"></h3>
+
     <div class="col-lg-6 text-center">
       <div class="row">
         <p class="col-6 d-inline room-params-text">Основной свет:</p>
-        <p class="col-6 d-inline room-params-text" id="main_light">70%</p>
+        <p class="col-6 d-inline room-params-text" id="main_light">%</p>
       </div>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Подсветка:</p>
-        <p class="col-6 d-inline room-params-text" id="supply_light">90%</p>
+        <p class="col-6 d-inline room-params-text" id="supply_light">%</p>
       </div>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Свет в коридоре:</p>
-        <p class="col-6 d-inline room-params-text" id="corridor_light">60%</p>
+        <p class="col-6 d-inline room-params-text" id="corridor_light">%</p>
       </div>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Свет в санузле:</p>
-        <p class="col-6 d-inline room-params-text" id="bath_light">70%</p>
+        <p class="col-6 d-inline room-params-text" id="bath_light">%</p>
       </div>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Шторы:</p>
-        <p class="col-6 d-inline room-params-text" id="blinds">Закрыты</p>
+        <p class="col-6 d-inline room-params-text" id="blinds"></p>
       </div>
     </div>
     <div class="col-lg-6 text-center">
       <div class="row">
         <p class="col-6 d-inline room-params-text">Уставка температуры:</p>
-        <p class="col-6 d-inline room-params-text" id="main_light">70%</p>
+        <p class="col-6 d-inline room-params-text" id="temp_sp">%</p>
       </div>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Кондиционер - статус:</p>
-        <p class="col-6 d-inline room-params-text" id="bath_light">70%</p>
+        <p class="col-6 d-inline room-params-text" id="fan_on_off">%</p>
       </div>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Кондиционер - скорость:</p>
-        <p class="col-6 d-inline room-params-text" id="corridor_light">60%</p>
+        <p class="col-6 d-inline room-params-text" id="fan_speed">%</p>
       </div>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Кондиционер - режим:</p>
-        <p class="col-6 d-inline room-params-text" id="blinds">Закрыты</p>
+        <p class="col-6 d-inline room-params-text" id="fan_auto_mode"></p>
       </div>
       <div class="row">
-        <p class="col-6 d-inline room-params-text">Клапан батареи::</p>
-        <p class="col-6 d-inline room-params-text" id="supply_light">90%</p>
+        <p class="col-6 d-inline room-params-text">Клапан батареи:</p>
+        <p class="col-6 d-inline room-params-text" id="heat_valve">%</p>
       </div>
     </div>
   </div>
 
   <script>
-    const myForm = document.getElementById("room_select");
-    document.querySelector(".submit").addEventListener("change", function(){
-      myForm.submit();
+    document.querySelector(".submit").addEventListener("change", function (e) {
+        e.preventDefault();
+        room_number = document.getElementById("{{ room_select.room.id_for_label }}").value;
+
+        const myForm = new FormData();
+        myForm.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        myForm.append('room', room_number)
+
+        fetch('{% url "room" %}', {
+            method: 'POST',
+            body: myForm
+        })
+
+            .then(response => response.json())
+
+
+            .then(data => {
+                console.log('Success!', data)
+                document.getElementById('room_content').classList.remove('d-none')
+
+                document.getElementById('room_number').textContent = 'Номер ' + data['room_number']
+
+                for (light in data['room_light']) {
+                    let value = data['room_light'][light]
+                    if (light === 'blinds') {
+                        document.getElementById(light).textContent = value ? 'Открыты' : 'Закрыты'
+                    } else {
+                        document.getElementById(light + '_light').textContent = value + "%"
+                    }
+                }
+
+                for (fan_option in data['room_climat']) {
+                    let value = data['room_climat'][fan_option]
+                    if (fan_option === 'fan_on_off') {
+                        document.getElementById(fan_option).textContent = value ? 'Включен' : 'Отключен'
+                    } else if (fan_option === 'fan_auto_mode') {
+                        document.getElementById(fan_option).textContent = value ? 'Автоматический' : 'Ручной'
+                    } else if (fan_option === 'temp_sp') {
+                        document.getElementById(fan_option).textContent = value + "℃"
+                    } else {
+                        document.getElementById(fan_option).textContent = value + "%"
+                    }
+                }
+            })
+
+            .catch(error => {
+                let error_msg = document.getElementById('error_msg')
+                error_msg.classList.remove('d-none')
+                error_msg.textContent = error
+            });
+
     });
-
-
   </script>
+
 {% endblock %}
