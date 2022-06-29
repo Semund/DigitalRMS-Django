@@ -8,17 +8,62 @@
         {{ room_select.room.as_widget }}
     </div>
     <hr class="mt-3 mb-3">
-
-    {% if test_select %}
-      <h1>{{ test_select }}</h1>
-    {% endif %}
-
   </form>
+
+  <div class="row">
+    <h3 class="text-center mb-4" id="room_number">Номер 501</h3>
+    <div class="col-lg-6 text-center">
+      <div class="row">
+        <p class="col-6 d-inline room-params-text">Основной свет:</p>
+        <p class="col-6 d-inline room-params-text" id="main_light">70%</p>
+      </div>
+      <div class="row">
+        <p class="col-6 d-inline room-params-text">Подсветка:</p>
+        <p class="col-6 d-inline room-params-text" id="supply_light">90%</p>
+      </div>
+      <div class="row">
+        <p class="col-6 d-inline room-params-text">Свет в коридоре:</p>
+        <p class="col-6 d-inline room-params-text" id="corridor_light">60%</p>
+      </div>
+      <div class="row">
+        <p class="col-6 d-inline room-params-text">Свет в санузле:</p>
+        <p class="col-6 d-inline room-params-text" id="bath_light">70%</p>
+      </div>
+      <div class="row">
+        <p class="col-6 d-inline room-params-text">Шторы:</p>
+        <p class="col-6 d-inline room-params-text" id="blinds">Закрыты</p>
+      </div>
+    </div>
+    <div class="col-lg-6 text-center">
+      <div class="row">
+        <p class="col-6 d-inline room-params-text">Уставка температуры:</p>
+        <p class="col-6 d-inline room-params-text" id="main_light">70%</p>
+      </div>
+      <div class="row">
+        <p class="col-6 d-inline room-params-text">Кондиционер - статус:</p>
+        <p class="col-6 d-inline room-params-text" id="bath_light">70%</p>
+      </div>
+      <div class="row">
+        <p class="col-6 d-inline room-params-text">Кондиционер - скорость:</p>
+        <p class="col-6 d-inline room-params-text" id="corridor_light">60%</p>
+      </div>
+      <div class="row">
+        <p class="col-6 d-inline room-params-text">Кондиционер - режим:</p>
+        <p class="col-6 d-inline room-params-text" id="blinds">Закрыты</p>
+      </div>
+      <div class="row">
+        <p class="col-6 d-inline room-params-text">Клапан батареи::</p>
+        <p class="col-6 d-inline room-params-text" id="supply_light">90%</p>
+      </div>
+    </div>
+  </div>
 
   <script>
     const myForm = document.getElementById("room_select");
     document.querySelector(".submit").addEventListener("change", function(){
       myForm.submit();
     });
+
+
   </script>
 {% endblock %}
