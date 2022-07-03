@@ -6,10 +6,14 @@ from registration.models import Room
 
 
 class RoomAutomation(models.Model):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, verbose_name='Номер')
+    number = models.IntegerField(verbose_name='Номер', null=False, unique=True)
     light = models.JSONField(verbose_name='Свет')
     climat = models.JSONField(verbose_name='Климат')
 
     class Meta:
         verbose_name = 'Автоматизация номера'
         verbose_name_plural = 'Автоматизация номеров'
+        ordering = ['number']
+
+    def __str__(self):
+        return f'Номер {self.number}'
