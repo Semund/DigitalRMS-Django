@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'room_automation.apps.RoomAutomationConfig',
     'registration.apps.RegistrationConfig',
     'restaurant.apps.RestaurantConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
