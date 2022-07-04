@@ -1,0 +1,11 @@
+# do in console
+# cp settings_local.py.default settings_local.py
+# insert your secret data!
+
+SECRET_KEY = 'django secret key'
+
+PGDB_NAMEDB = 'Postgres DB name'
+PGDB_USER = 'DB username'
+PGDB_PASSWORD = 'DB user password'
+PGDB_HOST = 'DB host'
+PGDB_PORT = 'DB port'
