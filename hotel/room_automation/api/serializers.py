@@ -5,6 +5,6 @@ from room_automation.models import RoomAutomation
 
 
 class RoomAutomationSerializer(serializers.ModelSerializer):
-    class Meta:
+   class Meta:
         model = RoomAutomation
         fields = ('number', 'light', 'climat')
