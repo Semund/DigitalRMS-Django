@@ -3,3 +3,5 @@ venv/
 __pycache__
 /design/
 /hotel/hotel/settings_local.py
+/webportal/webportal/settings_local.py
+env/
