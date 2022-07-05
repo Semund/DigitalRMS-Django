@@ -22,7 +22,7 @@
   <div class="container d-flex justify-content-center align-items-center h-100 w-100">
     <div class="row justify-content-md-center w-100">
       <div class="col-md-8 col-lg-6 mb-4 p-2">
-              <form method="post" action="{{ url_hotel_guest_api }}">
+              <form method="post" action="">
                  {% csrf_token %}
                 <div class="row justify-content-md-center">
                     <div class="col-md-4">
@@ -42,7 +42,7 @@
                          placeholder="Input last 4 digits of your passport" maxlength="4" minlength="4" required>
                 </div>
                 <div class="text-center">
-                  <button class="btn btn-primary bgcolor-blue px-5">Log in</button>
+                  <button class="submit btn btn-primary bgcolor-blue px-5">Log in</button>
                 </div>
               </form>
           </div>
@@ -50,6 +50,31 @@
 
     </div>
 <script>
+    document.querySelector(".submit").addEventListener("click", function (e) {
+        e.preventDefault();
+        room_number = document.getElementById("roomNumber").value;
+        passport_data = document.getElementById("passportDigits").value;
 
+        const myForm = new FormData();
+        myForm.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        myForm.append('room_number', room_number)
+        myForm.append('passport_data', passport_data)
+
+        fetch("{{ url_hotel_guest_api }}", {
+            method: 'POST',
+            body: myForm
+        })
+
+            .then(response => response.json())
+
+            .then(data => {
+                console.log('Success!', data)
+            })
+
+            .catch(error => {
+                console.log('Error', error)
+            });
+
+    });
 </script>
 </body>
