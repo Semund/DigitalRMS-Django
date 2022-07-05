@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Room(models.Model):
-    number = models.IntegerField(verbose_name='Номер')
+    number = models.CharField(verbose_name='Номер', max_length=5)
 
     def __str__(self):
         return f'Номер {self.number}'
