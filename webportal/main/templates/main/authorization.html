@@ -16,6 +16,7 @@
           integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+  <script defer src="{% static "main/js/main.js" %}"></script>
   <title>{{ page_title }}</title>
 </head>
 <body>
@@ -37,7 +38,7 @@
                          placeholder="Input your room number" maxlength="3" minlength="3" required>
                 </div>
                 <div class="form-group mb-3">
-                  <label for="passportDigits" class="mb-1">Password</label>
+                  <label for="passportDigits" class="mb-1">Passport</label>
                   <input type="password" name="passport_data" class="form-control" id="passportDigits"
                          placeholder="Input last 4 digits of your passport" maxlength="4" minlength="4" required>
                 </div>
@@ -47,34 +48,11 @@
               </form>
           </div>
       </div>
-
     </div>
 <script>
-    document.querySelector(".submit").addEventListener("click", function (e) {
-        e.preventDefault();
-        room_number = document.getElementById("roomNumber").value;
-        passport_data = document.getElementById("passportDigits").value;
+    var TOKEN = "{{ csrf_token }}";
+    var GUEST_API = "{% url 'guest_api' %}";
+    var HOTEL_GUEST_DATA_API = "{{ url_hotel_guest_api }}";
 
-        const myForm = new FormData();
-        myForm.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-        myForm.append('room_number', room_number)
-        myForm.append('passport_data', passport_data)
-
-        fetch("{{ url_hotel_guest_api }}", {
-            method: 'POST',
-            body: myForm
-        })
-
-            .then(response => response.json())
-
-            .then(data => {
-                console.log('Success!', data)
-            })
-
-            .catch(error => {
-                console.log('Error', error)
-            });
-
-    });
 </script>
 </body>
