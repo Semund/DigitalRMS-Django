@@ -10,12 +10,13 @@ from webportal import settings
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, room, passport, checkout_date, **extra_fields):
+    def create_user(self, room, passport, checkout_date, name, **extra_fields):
         now = timezone.now()
         user = self.model(
             room=room,
             passport=passport,
             checkout_date=checkout_date,
+            name=name,
             last_login=now,
             **extra_fields
         )
@@ -33,11 +34,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     passport = models.CharField(max_length=12, unique=True)
     room = models.CharField(max_length=3)
     checkout_date = models.DateField()
+    name = models.CharField(max_length=50)
+    created_at = models.DateField(auto_now_add=True)
     last_login = models.DateTimeField(null=True, blank=True)
     password = None
 
     USERNAME_FIELD = 'passport'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['']
 
     objects = UserManager()
 
@@ -55,7 +58,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.passport
 
     def _generate_jwt_token(self):
-        dt = self.checkout_date - date.today()
+        dt = self.checkout_date - self.created_at
 
         token = jwt.encode({
             'id': self.pk,

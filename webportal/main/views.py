@@ -11,7 +11,7 @@ def authorization(request):
     return render(request, 'main/authorization.html', context=context)
 
 
-@login_required(login_url='authorization')
+# @login_required(login_url='authorization')
 def index(request):
     context = {
         'page_title': 'Main'
