@@ -1,16 +1,16 @@
 document.querySelector(".submit").addEventListener("click", function (e) {
         e.preventDefault();
-        let room_number = document.getElementById("roomNumber").value;
-        let passport_data = document.getElementById("passportDigits").value;
+        let room = document.getElementById("roomNumber").value;
+        let passport = document.getElementById("passportDigits").value;
 
         const myForm = new FormData();
         myForm.append("csrfmiddlewaretoken", TOKEN);
-        myForm.append("room_number", room_number)
-        myForm.append("passport_data", passport_data)
+        myForm.append("room", room)
+        myForm.append("passport", passport)
 
-        function sendGuestData(data) {
+        function registerGuest(data) {
             let xhr = new XMLHttpRequest();
-                xhr.open("POST", GUEST_API );
+                xhr.open("POST", REGISTRATION_API );
 
                 xhr.setRequestHeader("Accept", "application/json");
                 xhr.setRequestHeader("Content-Type", "application/json");
@@ -20,7 +20,7 @@ document.querySelector(".submit").addEventListener("click", function (e) {
                 xhr.send(JSON.stringify(data));
         }
 
-        fetch(HOTEL_GUEST_DATA_API, {
+        fetch(VALIDATION_API, {
             method: 'POST',
             body: myForm
         })
@@ -28,10 +28,13 @@ document.querySelector(".submit").addEventListener("click", function (e) {
             .then(response => response.json())
 
             .then(data => {
-                if (data["detail"] === "Not found.") {
+                console.log(data)
+                if (data["status"] === "Invalid data") {
                     alert("Incorrect room number or passport data")
+                } else if (data["status"] === "Connection error") {
+                    alert("No connection with server")
                 } else {
-                    sendGuestData(data)
+                    registerGuest(data)
                 }
             })
 
@@ -39,4 +42,4 @@ document.querySelector(".submit").addEventListener("click", function (e) {
                 alert("Hotel service connection error")
             });
 
-    });
+});

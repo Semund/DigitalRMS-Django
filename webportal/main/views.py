@@ -1,20 +1,88 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+import requests
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpRequest
+from django.shortcuts import redirect
+
+from django.views.generic import TemplateView
+
+from main.models import User
 
 
-# Create your views here.
-def authorization(request):
-    context = {
-        'page_title': 'Authorization',
-        'url_hotel_guest_api': 'http://127.0.0.1:8001/checkin/api/v1/guest'
+class IndexView(LoginRequiredMixin, TemplateView):
+    login_url = 'authorization'
+    template_name = 'main/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Main'
+        return context
+
+
+def check_guest_in_existing_users(data: dict) -> bool:
+    existing_users = User.objects.filter(passport=data['passport'], room=data['room'])
+    return len(existing_users) > 0
+
+
+def hotel_guest_data_validation(request: HttpRequest) -> dict | None:
+    hotel_url_api = 'http://127.0.0.1:8001/checkin/api/v1/guest'
+    passport_data = request.POST['passport']
+
+    guest_data_for_hotel_api = {
+        'room_number': request.POST['room'],
+        'passport_data': passport_data
     }
-    return render(request, 'main/authorization.html', context=context)
+
+    try:
+        response = requests.post(url=hotel_url_api, data=guest_data_for_hotel_api)
+        if response.status_code == 200:
+            guest_data = {
+                'name': response.json()['guests'][0]['first_name'],
+                'room': response.json()['room'],
+                'passport': passport_data,
+                'checkin_date': response.json()['checkin_date'],
+                'checkout_date': response.json()['checkout_date']
+            }
+            return guest_data
+    except (requests.RequestException,):
+        messages.error(request, 'No connection with hotel systems')
+        return redirect('authorization')
 
 
-# @login_required(login_url='authorization')
-def index(request):
-    context = {
-        'page_title': 'Main'
-    }
-    return render(request, 'main/index.html', context=context)
+def register_guest_in_webportal(guest_data: dict) -> None:
+    new_guest = User(**guest_data)
+    new_guest.save()
+
+
+class AuthorizationView(TemplateView):
+    template_name = 'main/authorization.html'
+
+    def authorization_failed(self, request):
+        messages.error(request, 'Wrong passport or room data')
+        return redirect('authorization')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Authorization'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if not check_guest_in_existing_users(request.POST):
+            guest_data = hotel_guest_data_validation(request)
+            if guest_data:
+                register_guest_in_webportal(guest_data)
+            else:
+                return self.authorization_failed(request)
+
+        user = authenticate(
+            request,
+            passport=request.POST['passport'],
+            room=request.POST['room']
+        )
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            return self.authorization_failed(request)
 

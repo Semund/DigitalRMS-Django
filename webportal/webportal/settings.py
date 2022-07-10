@@ -13,6 +13,8 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+import rest_framework.authentication
+
 from .settings_local import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -144,21 +146,6 @@ MEDIA_URL = 'media/'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'main.api.users.backends.AuthenticationWithoutPassword',
+    'main.backends.AuthenticationWithoutPassword',
 )
-
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ],
-
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
-
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'main.api.users.backends.JWTAuthentication',
-    ]
-}
 
