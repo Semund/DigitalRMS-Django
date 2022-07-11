@@ -149,3 +149,4 @@ AUTHENTICATION_BACKENDS = (
     'main.backends.AuthenticationWithoutPassword',
 )
 
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

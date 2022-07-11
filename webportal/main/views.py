@@ -1,4 +1,8 @@
+import datetime
+from zoneinfo import ZoneInfo
+
 import requests
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -55,6 +59,13 @@ def register_guest_in_webportal(guest_data: dict) -> None:
     new_guest.save()
 
 
+def get_user_checkout_datetime(user: User) -> datetime.datetime:
+    date = user.checkout_date
+    tz = ZoneInfo(settings.TIME_ZONE)
+    time = datetime.time(hour=12, minute=0, tzinfo=tz)
+    return datetime.datetime.combine(date, time)
+
+
 class AuthorizationView(TemplateView):
     template_name = 'main/authorization.html'
 
@@ -82,7 +93,10 @@ class AuthorizationView(TemplateView):
         )
         if user is not None:
             login(request, user)
+            guest_datetime = get_user_checkout_datetime(user)
+            request.session.set_expiry(guest_datetime)
             return redirect('home')
         else:
             return self.authorization_failed(request)
+
 
