@@ -1,5 +1,58 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<h1>Hi</h1>
+  <div class="row">
+    <div class="col-lg-3 col-md-6 col sm-12">
+      <div class="row">
+        <h4 class="text-center mb-4">Прогноз погоды:</h4>
+        {% for date, date_data in weather.items %}
+          <div class="border">
+            <h5 class="text-center p-2">{{ date|date:"d.m, l" }}</h5>
+            <div class="row">
+              {% for w in date_data %}
+                <div class="col-3">
+                  <ul class="list-unstyled">
+                    <li class="text-center">{{ w.time|time:"G:i" }}</li>
+                    <li class="text-center">
+                      <img src="http://openweathermap.org/img/wn/{{ w.icon }}@2x.png" data-bs-toggle="tooltip"
+                           data-bs-placement="top" title="{{ w.desc }}" class="img-fluid" alt="{{ w.desc }}">
+                    </li>
+                    <li class="text-center text-nowrap">{{ w.temp }} °C</li>
+                  </ul>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+  </div>
+    </div>
+    <div class="col-lg-9 col-md-6 col-sm-12">
+      <div class="row">
+        <h4 class="text-center mb-4">Ближайшие мероприятия:</h4>
+          {% for event, event_data in events.items %}
+            <div class="col-lg-4 col-md-12">
+              <div class="card">
+                <img src="{{ event_data.image }}" class="img-fluid" alt="event image">
+                <div class="card-body">
+                  <p class="card-text">{{ event_data.title }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  {% for d_start, d_end in event_data.dates %}
+                    <li class="list-group-item">
+                      Даты мероприятия:
+                    </li>
+                    <li class="list-group-item">
+                      {{ d_start|date:"d F G:i" }} - {{ d_end|date:"d F G:i" }}
+                    </li>
+                  {% endfor %}
+                </ul>
+                <div class="card-body">
+                  <a href="{{ event_data.url }}" class="btn btn-primary" target="_blank">kudago.com</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
 {% endblock %}
