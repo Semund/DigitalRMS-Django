@@ -1,27 +1,14 @@
 import datetime
-from zoneinfo import ZoneInfo
 
 import requests
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest
 from django.shortcuts import redirect
-
 from django.views.generic import TemplateView
 
 from main.models import User
-
-
-class IndexView(LoginRequiredMixin, TemplateView):
-    login_url = 'authorization'
-    template_name = 'main/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['page_title'] = 'Main'
-        return context
 
 
 def check_guest_in_existing_users(data: dict) -> bool:
@@ -99,3 +86,6 @@ class AuthorizationView(TemplateView):
             return self.authorization_failed(request)
 
 
+def logout_view(request):
+    logout(request)
+    return redirect('authorization')

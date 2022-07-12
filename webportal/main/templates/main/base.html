@@ -18,39 +18,53 @@
   <title>{{ page_title }}</title>
 </head>
 <body>
-  <header class="bgcolor-blue">
-    <div class="container">
-      <nav class="navbar navbar-dark navbar-expand-lg bgcolor-blue mb-4">
-        <div class="container-fluid">
-          <a class="navbar-brand text-white me-5" href="#">
-            <strong>Digital RMS</strong>
-          </a>
-          <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-2 mb-2 mb-lg-0">
-              <li class="nav-item me-5">
-                <a class="nav-link text-white" aria-current="page" href="#">Управление номером</a>
-              </li>
-              <li class="nav-item me-5">
-                <a class="nav-link text-white" href="#">Заказ еды</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#">Контакты</a>
-              </li>
-            </ul>
-          </div>
+<header class="bgcolor-blue">
+  <div class="container">
+    <nav class="navbar navbar-dark navbar-expand-lg bgcolor-blue mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand text-white me-5" href="{% url 'home' %}">
+          <strong>Digital RMS</strong>
+        </a>
+        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-2 mb-2 mb-lg-0">
+            <li class="nav-item me-5">
+              <a class="nav-link text-white" aria-current="page" href="#">Управление номером</a>
+            </li>
+            <li class="nav-item me-5">
+              <a class="nav-link text-white" href="#">Заказ еды</a>
+            </li>
+            <li class="nav-item me-5">
+              <a class="nav-link text-white" href="#">Контакты</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button"
+                 data-bs-toggle="dropdown" aria-expanded="false">{{ guest_name }} </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Выйти</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
-    </div>
-  </header>
-  <main>
-    <div class="container">
-      {% block content %}
-      {% endblock %}
-    </div>
-  </main>
+  </div>
+</header>
+<main>
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+</main>
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
 </body>
 </html>
