@@ -6,6 +6,8 @@ from webportal.settings_local import WEATHER_API_KEY
 
 
 class Command(BaseCommand):
+    help = "Get weather for 5 days since today and add them to DB"
+
     WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/forecast'
 
     request_parameters = {
@@ -21,6 +23,7 @@ class Command(BaseCommand):
         try:
             response = requests.get(self.WEATHER_API_URL, params=self.request_parameters)
             if response.status_code == 200:
+                Weather.objects.all().delete()
                 for w in response.json()['list']:
                     date, time = w['dt_txt'].split()
                     weather = Weather(
@@ -33,5 +36,4 @@ class Command(BaseCommand):
                     weather.save()
 
         except (requests.RequestException,):
-            pass #  TODO create logging
-
+            pass  # TODO create logging

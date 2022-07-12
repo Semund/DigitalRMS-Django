@@ -61,8 +61,7 @@ def register_guest_in_webportal(guest_data: dict) -> None:
 
 def get_user_checkout_datetime(user: User) -> datetime.datetime:
     date = user.checkout_date
-    tz = ZoneInfo(settings.TIME_ZONE)
-    time = datetime.time(hour=12, minute=0, tzinfo=tz)
+    time = datetime.time(hour=12, minute=0, tzinfo=settings.TZONE_INFO)
     return datetime.datetime.combine(date, time)
 
 
