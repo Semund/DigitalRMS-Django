@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="row">
+    <h3 class="text-center mb-4"></h3>
+
+    <div class="col-lg-6 text-center">
+      <div class="row mb-3 justify-content-center">
+        <span class="col-lg-4 col-md-12 d-inline room-params-text">Основной свет:</span>
+        <div class="col-lg-5 col-md-12">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="main_light"
+                 oninput="this.nextElementSibling.value = this.value">
+          <output>0</output><span> %</span>
+        </div>
+      </div>
+      <div class="row mb-3 justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text">Подсветка:</span>
+        <div class="col-lg-5 col-md-7">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="supply_light"
+                 oninput="this.nextElementSibling.value = this.value">
+          <output>0</output><span> %</span>
+  </div>
+      </div>
+      <div class="row mb-3 justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text">Свет в коридоре:</span>
+        <div class="col-lg-5 col-md-7">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="corridor_light"
+                 oninput="this.nextElementSibling.value = this.value">
+          <output>0</output><span> %</span>
+        </div>
+      </div>
+      <div class="row mb-4 justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text">Свет в санузле:</span>
+        <div class="col-lg-5 col-md-7">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="bath_light"
+                 oninput="this.nextElementSibling.value = this.value">
+          <output>0</output><span> %</span>
+        </div>
+      </div>
+      <div class="row mb-3 justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text pt-2">Шторы:</span>
+        <div class="col-lg-5 col-md-7 text-nowrap">
+          <button type="button" class="btn btn-danger">Закрыть</button>
+          <button type="button" class="btn btn-success">Открыть</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 text-center">
+      <div class="row mb-4 justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text">Уставка температуры:</span>
+        <div class="col-lg-5 col-md-7">
+          <input type="range" class="form-range" min="16" max="30" value="16" step="1" id="bath_light"
+                 oninput="this.nextElementSibling.value = this.value">
+          <output>16</output><span> °C</span>
+        </div>
+      </div>
+      <div class="row mb-4 justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text">Кондиционер - статус:</span>
+        <div class="col-lg-5 col-md-7 text-nowrap">
+          <button type="button" class="btn btn-danger">Отключить</button>
+          <button type="button" class="btn btn-success px-3">Включить</button>
+        </div>
+      </div>
+      <div class="row mb-3 justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text">Кондиционер - скорость:</span>
+        <div class="col-lg-5 col-md-7">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="bath_light"
+                 oninput="this.nextElementSibling.value = this.value">
+          <output>0</output><span> %</span>
+        </div>
+      </div>
+      <div class="row mb-3 justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text">Кондиционер - режим:</span>
+        <div class="col-lg-5 col-md-7 text-nowrap">
+          <button type="button" class="btn btn-danger">Ручной</button>
+          <button type="button" class="btn btn-success px-4">Авто</button>
+        </div>
+      </div>
+      <div class="row mb-3 justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text">Клапан батареи:</span>
+        <div class="col-lg-5 col-md-7">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="bath_light"
+                 oninput="this.nextElementSibling.value = this.value">
+          <output>0</output><span> %</span>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
