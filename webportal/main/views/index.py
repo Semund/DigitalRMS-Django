@@ -31,7 +31,7 @@ def collect_events_from_db(guest_checkout_date: datetime.date) -> dict:
     events_data = Event.objects.filter(
         date_end__range=(date.today(), guest_checkout_date),
         date_end__hour__gt=0
-    )[:30]
+    )[:10]
 
     events_for_guest = {}
 
@@ -62,7 +62,6 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
         weather_for_guest = collect_weather_from_db()
         events_for_guest = collect_events_from_db(request.user.checkout_date)
-        print(events_for_guest)
         context = self.get_context_data(weather=weather_for_guest,
                                         events=events_for_guest,
                                         guest_name=guest_name,
