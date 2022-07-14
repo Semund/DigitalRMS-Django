@@ -28,7 +28,6 @@ document.querySelector(".submit").addEventListener("click", function (e) {
             .then(response => response.json())
 
             .then(data => {
-                console.log(data)
                 if (data["status"] === "Invalid data") {
                     alert("Incorrect room number or passport data")
                 } else if (data["status"] === "Connection error") {

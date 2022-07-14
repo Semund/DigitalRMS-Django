@@ -5,10 +5,11 @@ from room_automation.models import RoomAutomation
 
 class RoomAutomationForm(forms.Form):
     number = forms.ModelChoiceField(
-                empty_label='Номер не выбран',
-                label='Выберите номер:',
-                queryset=RoomAutomation.objects.all(),
-                widget=forms.Select(attrs={'class': 'form-control submit',
-                                           'type': 'text',
-                                           'onchange': 'getRoomData(this.value);'})
-            )
+        empty_label='Номер не выбран',
+        label='Выберите номер:',
+        queryset=RoomAutomation.objects.all(),
+        to_field_name='number',
+        widget=forms.Select(attrs={'class': 'form-control submit',
+                                   'type': 'text',
+                                   'onchange': 'getRoomData(this.value);'})
+    )

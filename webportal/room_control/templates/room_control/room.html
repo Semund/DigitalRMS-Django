@@ -1,89 +1,114 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+  {% csrf_token %}
+  <script>
+      var GUEST_ROOM = "{{ guest_room_number }}"
+      var URL_ROOM_API = "{{ url_room_api }}" + GUEST_ROOM + "/"
+      var TOKEN = "{{ csrf_token }}"
+  </script>
   <div class="row">
     <h3 class="text-center mb-4"></h3>
 
     <div class="col-lg-6 text-center">
+      <h4 class="mb-4">Освещение</h4>
       <div class="row mb-3 justify-content-center">
-        <span class="col-lg-4 col-md-12 d-inline room-params-text">Основной свет:</span>
-        <div class="col-lg-5 col-md-12">
-          <input type="range" class="form-range" min="0" max="100" value="0" id="main_light"
-                 oninput="this.nextElementSibling.value = this.value">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text">Основной свет:</span>
+        <div class="col-lg-5 col-md-7">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="light_main"
+                 oninput="this.nextElementSibling.value = this.value" onchange="updateRoomDataHotelServer();">
           <output>0</output><span> %</span>
         </div>
       </div>
       <div class="row mb-3 justify-content-center">
         <span class="col-lg-4 col-md-4 d-inline room-params-text">Подсветка:</span>
         <div class="col-lg-5 col-md-7">
-          <input type="range" class="form-range" min="0" max="100" value="0" id="supply_light"
-                 oninput="this.nextElementSibling.value = this.value">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="light_supply"
+                 oninput="this.nextElementSibling.value = this.value" onchange="updateRoomDataHotelServer();">
           <output>0</output><span> %</span>
   </div>
       </div>
       <div class="row mb-3 justify-content-center">
         <span class="col-lg-4 col-md-4 d-inline room-params-text">Свет в коридоре:</span>
         <div class="col-lg-5 col-md-7">
-          <input type="range" class="form-range" min="0" max="100" value="0" id="corridor_light"
-                 oninput="this.nextElementSibling.value = this.value">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="light_corridor"
+                 oninput="this.nextElementSibling.value = this.value" onchange="updateRoomDataHotelServer();">
           <output>0</output><span> %</span>
         </div>
       </div>
       <div class="row mb-4 justify-content-center">
         <span class="col-lg-4 col-md-4 d-inline room-params-text">Свет в санузле:</span>
         <div class="col-lg-5 col-md-7">
-          <input type="range" class="form-range" min="0" max="100" value="0" id="bath_light"
-                 oninput="this.nextElementSibling.value = this.value">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="light_bath"
+                 oninput="this.nextElementSibling.value = this.value" onchange="updateRoomDataHotelServer();">
           <output>0</output><span> %</span>
         </div>
       </div>
-      <div class="row mb-3 justify-content-center">
+      <div class="row mb-5 justify-content-center">
         <span class="col-lg-4 col-md-4 d-inline room-params-text pt-2">Шторы:</span>
         <div class="col-lg-5 col-md-7 text-nowrap">
-          <button type="button" class="btn btn-danger">Закрыть</button>
-          <button type="button" class="btn btn-success">Открыть</button>
+          <input type="radio" class="btn-check" name="light_blinds" value="false"
+                 id="light_blinds_close" autocomplete="off" onchange="updateRoomDataHotelServer();">
+          <label class="btn btn-outline-danger" for="light_blinds_close">Закрыть</label>
+
+          <input type="radio" class="btn-check" name="light_blinds" value="true"
+                 id="light_blinds_open" autocomplete="off" onchange="updateRoomDataHotelServer();">
+          <label class="btn btn-outline-success" for="light_blinds_open">Открыть</label>
         </div>
       </div>
     </div>
     <div class="col-lg-6 text-center">
-      <div class="row mb-4 justify-content-center">
+      <h4 class="mb-4">Климат</h4>
+      <div class="row mb-3 justify-content-center">
         <span class="col-lg-4 col-md-4 d-inline room-params-text">Уставка температуры:</span>
         <div class="col-lg-5 col-md-7">
-          <input type="range" class="form-range" min="16" max="30" value="16" step="1" id="bath_light"
-                 oninput="this.nextElementSibling.value = this.value">
+          <input type="range" class="form-range" min="16" max="30" value="16" step="1" id="climat_temp_sp"
+                 oninput="this.nextElementSibling.value = this.value" onchange="updateRoomDataHotelServer();">
           <output>16</output><span> °C</span>
-        </div>
-      </div>
-      <div class="row mb-4 justify-content-center">
-        <span class="col-lg-4 col-md-4 d-inline room-params-text">Кондиционер - статус:</span>
-        <div class="col-lg-5 col-md-7 text-nowrap">
-          <button type="button" class="btn btn-danger">Отключить</button>
-          <button type="button" class="btn btn-success px-3">Включить</button>
-        </div>
-      </div>
-      <div class="row mb-3 justify-content-center">
-        <span class="col-lg-4 col-md-4 d-inline room-params-text">Кондиционер - скорость:</span>
-        <div class="col-lg-5 col-md-7">
-          <input type="range" class="form-range" min="0" max="100" value="0" id="bath_light"
-                 oninput="this.nextElementSibling.value = this.value">
-          <output>0</output><span> %</span>
-        </div>
-      </div>
-      <div class="row mb-3 justify-content-center">
-        <span class="col-lg-4 col-md-4 d-inline room-params-text">Кондиционер - режим:</span>
-        <div class="col-lg-5 col-md-7 text-nowrap">
-          <button type="button" class="btn btn-danger">Ручной</button>
-          <button type="button" class="btn btn-success px-4">Авто</button>
         </div>
       </div>
       <div class="row mb-3 justify-content-center">
         <span class="col-lg-4 col-md-4 d-inline room-params-text">Клапан батареи:</span>
         <div class="col-lg-5 col-md-7">
-          <input type="range" class="form-range" min="0" max="100" value="0" id="bath_light"
-                 oninput="this.nextElementSibling.value = this.value">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="climat_heat_valve"
+                 oninput="this.nextElementSibling.value = this.value" onchange="updateRoomDataHotelServer();">
           <output>0</output><span> %</span>
+        </div>
+      </div>
+      <div class="row mb-4 justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text">Кондиционер - скорость:</span>
+        <div class="col-lg-5 col-md-7">
+          <input type="range" class="form-range" min="0" max="100" value="0" id="climat_fan_speed"
+                 oninput="this.nextElementSibling.value = this.value" onchange="updateRoomDataHotelServer();">
+          <output>0</output><span> %</span>
+        </div>
+      </div>
+      <div class="row mb-4 justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text pt-2">Кондиционер - статус:</span>
+        <div class="col-lg-5 col-md-7 text-nowrap">
+          <input type="radio" class="btn-check" name="climat_fan_on_off" value="false"
+                 id="climat_fan_off" autocomplete="off" onchange="updateRoomDataHotelServer();">
+          <label class="btn btn-outline-danger" for="climat_fan_off">Отключить</label>
+
+          <input type="radio" class="btn-check" name="climat_fan_on_off" value="true"
+                 id="climat_fan_on" autocomplete="off" onchange="updateRoomDataHotelServer();">
+          <label class="btn btn-outline-success px-3" for="climat_fan_on">Включить</label>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <span class="col-lg-4 col-md-4 d-inline room-params-text pt-2">Кондиционер - режим:</span>
+        <div class="col-lg-5 col-md-7 text-nowrap">
+          <input type="radio" class="btn-check" name="climat_fan_auto_mode" value="false"
+                 id="climat_fan_man" autocomplete="off" onchange="updateRoomDataHotelServer();">
+          <label class="btn btn-outline-danger" for="climat_fan_man">Ручной</label>
+
+          <input type="radio" class="btn-check" name="climat_fan_auto_mode" value="true"
+                 id="climat_fan_auto" autocomplete="off" onchange="updateRoomDataHotelServer();">
+          <label class="btn btn-outline-success px-4" for="climat_fan_auto">Авто</label>
         </div>
       </div>
     </div>
   </div>
+
+  <script defer src="{% static 'room_control/js/main.js' %}"></script>
 {% endblock %}
