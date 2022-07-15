@@ -1,14 +1,10 @@
 from django.db import models
 
 
-# Create your models here.
-from registration.models import Room
-
-
 class RoomAutomation(models.Model):
     number = models.CharField(verbose_name='Номер', null=False, max_length=5)
     light = models.JSONField(verbose_name='Свет')
-    climat = models.JSONField(verbose_name='Климат')
+    climate = models.JSONField(verbose_name='Климат')
 
     class Meta:
         verbose_name = 'Автоматизация номера'

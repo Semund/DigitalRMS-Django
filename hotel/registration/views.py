@@ -27,6 +27,5 @@ class CheckinView(TemplateView):
         booking = form_booking.save()
         booking.guests.add(guest)
 
-
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)

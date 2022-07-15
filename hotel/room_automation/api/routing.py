@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .api import consumers
+from . import consumers
 
 websocket_urlpatterns = [
     path(r'ws/room/', consumers.RoomAutomationConsumer.as_asgi())

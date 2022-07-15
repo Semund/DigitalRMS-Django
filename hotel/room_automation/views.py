@@ -1,6 +1,3 @@
-import json
-
-from django.http import JsonResponse
 from django.shortcuts import render
 
 from room_automation.forms import RoomAutomationForm

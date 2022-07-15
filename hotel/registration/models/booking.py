@@ -14,9 +14,3 @@ class Booking(models.Model):
         app_label = 'registration'
         verbose_name = 'Проживание'
         verbose_name_plural = 'Проживания'
-
-
-# class BookingGuest(models.Model):
-#     booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
-#     guest = models.ForeignKey(Guest, on_delete=models.CASCADE)
-

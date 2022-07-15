@@ -14,6 +14,7 @@
     <h3 class="text-center mb-4" id="room_number"></h3>
 
     <div class="col-lg-6 text-center">
+      <h4 class="mb-4">Освещение</h4>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Основной свет:</p>
         <p class="col-6 d-inline room-params-text" id="light_main">%</p>
@@ -36,31 +37,32 @@
       </div>
     </div>
     <div class="col-lg-6 text-center">
+      <h4 class="mb-4">Климат</h4>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Уставка температуры:</p>
-        <p class="col-6 d-inline room-params-text" id="climat_temp_sp">%</p>
+        <p class="col-6 d-inline room-params-text" id="climate_temp_sp">%</p>
       </div>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Кондиционер - статус:</p>
-        <p class="col-6 d-inline room-params-text" id="climat_fan_on_off">%</p>
+        <p class="col-6 d-inline room-params-text" id="climate_fan_on_off">%</p>
       </div>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Кондиционер - скорость:</p>
-        <p class="col-6 d-inline room-params-text" id="climat_fan_speed">%</p>
+        <p class="col-6 d-inline room-params-text" id="climate_fan_speed">%</p>
       </div>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Кондиционер - режим:</p>
-        <p class="col-6 d-inline room-params-text" id="climat_fan_auto_mode"></p>
+        <p class="col-6 d-inline room-params-text" id="climate_fan_auto_mode"></p>
       </div>
       <div class="row">
         <p class="col-6 d-inline room-params-text">Клапан батареи:</p>
-        <p class="col-6 d-inline room-params-text" id="climat_heat_valve">%</p>
+        <p class="col-6 d-inline room-params-text" id="climate_heat_valve">%</p>
       </div>
     </div>
   </div>
 
   <script defer>
-    let URL = "{% url 'room' %}" + "{{ url_api }}";
+      let URL = "{% url 'room' %}" + "{{ url_api }}";
   </script>
   <script defer src="{% static "room_automation/js/main.js" %}"></script>
 {% endblock %}

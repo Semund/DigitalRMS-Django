@@ -1,7 +1,6 @@
 from djangochannelsrestframework import permissions
 from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
 from djangochannelsrestframework.mixins import UpdateModelMixin
-
 from djangochannelsrestframework.observer.generics import ObserverModelInstanceMixin
 
 from room_automation.api.serializers import RoomAutomationSerializer
@@ -12,5 +11,3 @@ class RoomAutomationConsumer(ObserverModelInstanceMixin, GenericAsyncAPIConsumer
     queryset = RoomAutomation.objects.all()
     serializer_class = RoomAutomationSerializer
     permission_classes = (permissions.AllowAny,)
-
-

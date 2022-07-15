@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import inlineformset_factory
 
 from .models import Booking, Guest, Room
 
@@ -34,4 +33,3 @@ class BookingForm(forms.ModelForm):
             'checkout_date': forms.DateInput(attrs={'max': "9999-12-12", 'class': 'form-control', 'type': 'date'}),
             'room': forms.Select(attrs={'class': 'form-control', 'type': 'text'}, choices=tuple(Room.objects.all()))
         }
-

@@ -9,4 +9,3 @@ class RoomAutomationViewSet(GenericViewSet, RetrieveModelMixin, UpdateModelMixin
     queryset = RoomAutomation.objects.all()
     lookup_field = 'number'
     serializer_class = RoomAutomationSerializer
-

@@ -17,17 +17,17 @@ ws.onmessage = function (e) {
             }
         }
 
-        for (climat_parameter in data.data['climat']) {
-            let value = data.data['climat'][climat_parameter]
-            let id_climat_selector = 'climat_' + climat_parameter
-            if (climat_parameter === 'fan_on_off') {
-                document.getElementById(id_climat_selector).textContent = value ? 'Включен' : 'Отключен'
-            } else if (climat_parameter === 'fan_auto_mode') {
-                document.getElementById(id_climat_selector).textContent = value ? 'Автоматический' : 'Ручной'
-            } else if (climat_parameter === 'temp_sp') {
-                document.getElementById(id_climat_selector).textContent = value + "℃"
+        for (climate_parameter in data.data['climate']) {
+            let value = data.data['climate'][climate_parameter]
+            let id_climate_selector = 'climate_' + climate_parameter
+            if (climate_parameter === 'fan_on_off') {
+                document.getElementById(id_climate_selector).textContent = value ? 'Включен' : 'Отключен'
+            } else if (climate_parameter === 'fan_auto_mode') {
+                document.getElementById(id_climate_selector).textContent = value ? 'Автоматический' : 'Ручной'
+            } else if (climate_parameter === 'temp_sp') {
+                document.getElementById(id_climate_selector).textContent = value + "℃"
             } else {
-                document.getElementById(id_climat_selector).textContent = value + "%"
+                document.getElementById(id_climate_selector).textContent = value + "%"
             }
         }
     }
@@ -47,6 +47,3 @@ document.getElementById("id_number").onchange = function (e) {
     }))
 
 }
-
-
-
