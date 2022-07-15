@@ -16,42 +16,41 @@
           integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-{#  <script defer src="{% static "main/js/main.js" %}"></script>#}
   <title>{{ page_title }}</title>
 </head>
 <body>
-  <div class="container d-flex justify-content-center align-items-center h-100 w-100">
-    <div class="row justify-content-md-center w-100">
-      <div class="col-md-8 col-lg-6 mb-4 p-2">
-        <form method="post" action="{% url 'authorization' %}">
-           {% csrf_token %}
-          <div class="row justify-content-md-center">
-              <div class="col-md-4">
-                <div class="form-group text-center mb-2 p-2 bgcolor-blue rounded-2">
-                  <strong class="color-white">Digital RMS</strong>
-                </div>
-              </div>
+<div class="container d-flex justify-content-center align-items-center h-100 w-100">
+  <div class="row justify-content-md-center w-100">
+    <div class="col-md-8 col-lg-6 mb-4 p-2">
+      <form method="post" action="{% url 'authorization' %}">
+        {% csrf_token %}
+        <div class="row justify-content-md-center">
+          <div class="col-md-4">
+            <div class="form-group text-center mb-2 p-2 bgcolor-blue rounded-2">
+              <strong class="color-white">Digital RMS</strong>
+            </div>
           </div>
-          <ul class="mb-4 ">
-            {% for msg in messages %}
-              <li class="text-danger">{{ msg }}</li>
-            {% endfor %}
-          </ul>
-          <div class="form-group mb-3">
-            <label for="roomNumber" class="mb-1">Номер</label>
-            <input type="text" name="room" class="form-control form-control" id="roomNumber"
-                   placeholder="Введите Ваш номер в отеле" maxlength="3" required>
-          </div>
-          <div class="form-group mb-5">
-            <label for="passportDigits" class="mb-1">Паспорт</label>
-            <input type="password" name="passport" class="form-control" id="passportDigits"
-                   placeholder="Введите последние 4 символа Вашего паспорта" maxlength="4" minlength="4" required>
-          </div>
-          <div class="text-center">
-            <button type="submit" class="submit btn btn-primary bgcolor-blue px-5">Авторизоваться</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <ul class="mb-4 ">
+          {% for msg in messages %}
+            <li class="text-danger">{{ msg }}</li>
+          {% endfor %}
+        </ul>
+        <div class="form-group mb-3">
+          <label for="roomNumber" class="mb-1">Номер</label>
+          <input type="text" name="room" class="form-control form-control" id="roomNumber"
+                 placeholder="Введите Ваш номер в отеле" maxlength="3" required>
+        </div>
+        <div class="form-group mb-5">
+          <label for="passportDigits" class="mb-1">Паспорт</label>
+          <input type="password" name="passport" class="form-control" id="passportDigits"
+                 placeholder="Введите последние 4 символа Вашего паспорта" maxlength="4" minlength="4" required>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="submit btn btn-primary bgcolor-blue px-5">Авторизоваться</button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 </body>

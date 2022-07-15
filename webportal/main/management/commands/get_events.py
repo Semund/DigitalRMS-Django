@@ -1,7 +1,6 @@
-import requests
-
 from datetime import datetime, timedelta
 
+import requests
 from django.conf import settings
 from django.core.management import BaseCommand
 
@@ -35,19 +34,23 @@ class Command(BaseCommand):
 
         self.get_events_list_from_url_to_db(timestamp_start, timestamp_end)
 
-    def get_events_list_from_url_to_db(self, start: datetime.timestamp, end: datetime.timestamp) -> None:
+    def get_events_dates(self, event: dict, date_start: datetime.timestamp, date_end: datetime.timestamp) -> list:
+        current_event_dates = []
+        for date in event['dates']:
+            if date_start <= date['end'] <= date_end or date_start <= date['start'] <= date_end:
+                current_event_dates.append((
+                    datetime.fromtimestamp(date['start'], tz=settings.TZONE_INFO),
+                    datetime.fromtimestamp(date['end'], tz=settings.TZONE_INFO),
+                ))
+        return current_event_dates
+
+    def get_events_list_from_url_to_db(self, date_start: datetime.timestamp, date_end: datetime.timestamp) -> None:
         try:
             response = requests.get(self.EVENTS_API_URL, params=self.request_parameters)
             if response.status_code == 200:
+                Event.objects.all().delete()
                 for event in response.json()['results']:
-                    current_event_dates = []
-                    for date in event['dates']:
-                        if start <= date['end'] <= end or start <= date['start'] <= end:
-                            current_event_dates.append((
-                                datetime.fromtimestamp(date['start'], tz=settings.TZONE_INFO),
-                                datetime.fromtimestamp(date['end'], tz=settings.TZONE_INFO),
-                            ))
-
+                    current_event_dates = self.get_events_dates(event, date_start, date_end)
                     event_data = {
                         'dates': current_event_dates,
                         'title': event['title'],
@@ -57,7 +60,7 @@ class Command(BaseCommand):
                     }
                     self.write_event_to_db(event_data)
 
-        except (requests.RequestException,):
+        except requests.RequestException:
             pass  # TODO create logging
 
     def write_event_to_db(self, event: dict) -> None:

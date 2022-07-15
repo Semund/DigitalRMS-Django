@@ -35,5 +35,5 @@ class Command(BaseCommand):
                     )
                     weather.save()
 
-        except (requests.RequestException,):
+        except requests.RequestException:
             pass  # TODO create logging

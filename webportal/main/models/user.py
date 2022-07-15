@@ -1,11 +1,6 @@
-from datetime import date
-
-import jwt
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils import timezone
-
-from webportal import settings
 
 
 class UserManager(BaseUserManager):
@@ -52,4 +47,3 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.name
-

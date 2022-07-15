@@ -36,7 +36,7 @@ def hotel_guest_data_validation(request: HttpRequest) -> dict | None:
                 'checkout_date': response.json()['checkout_date']
             }
             return guest_data
-    except (requests.RequestException,):
+    except requests.RequestException:
         messages.error(request, 'No connection with hotel systems')
         return redirect('authorization')
 
