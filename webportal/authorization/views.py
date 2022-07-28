@@ -8,12 +8,12 @@ from django.http import HttpRequest
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 
-from main.models import User
+from authorization.models import User
 
 
 def check_guest_in_existing_users(data: dict) -> bool:
-    existing_users = User.objects.filter(passport=data['passport'], room=data['room'])
-    return len(existing_users) > 0
+    existing_users = User.objects.filter(passport=data['passport'], room=data['room']).exists()
+    return existing_users
 
 
 def hotel_guest_data_validation(request: HttpRequest) -> dict | None:

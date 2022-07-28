@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'main.apps.MainConfig',
+    'authorization.apps.AuthorizationConfig',
     'room_control.apps.RoomControlConfig'
 ]
 
@@ -99,7 +100,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
-AUTH_USER_MODEL = 'main.User'
+AUTH_USER_MODEL = 'authorization.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -149,7 +150,7 @@ MEDIA_URL = 'media/'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'main.backends.AuthenticationWithoutPassword',
+    'authorization.backends.AuthenticationWithoutPassword',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

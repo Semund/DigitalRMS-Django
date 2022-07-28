@@ -1,6 +1,6 @@
 from django.contrib.auth.backends import BaseBackend
 
-from main.models import User
+from authorization.models import User
 
 
 class AuthenticationWithoutPassword(BaseBackend):
