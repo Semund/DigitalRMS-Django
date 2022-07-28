@@ -2,7 +2,11 @@
 # cp settings_local.py.default settings_local.py
 # insert your secret data!
 
-SECRET_KEY = 'django secret key'
+'''
+This secret key is left to get to know the project.
+Replace it with yours when starting the project in production.
+'''
+SECRET_KEY = 'django-insecure-+s)ggd)xpz_fir7i52$^7y@$+a(-+noq()trgg&lhu#8q@!3da'
 
 PGDB_NAMEDB = 'Postgres DB name'
 PGDB_USER = 'DB username'
