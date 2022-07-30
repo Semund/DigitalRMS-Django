@@ -8,8 +8,27 @@ Replace it with yours when starting the project in production.
 '''
 SECRET_KEY = 'django-insecure--&t%qyux^hny3gvx6rp2dm5e#c@p7a@t5#lto^^8t&8hdl=^t8'
 
-PGDB_NAMEDB = 'Postgres DB name'
-PGDB_USER = 'DB username'
-PGDB_PASSWORD = 'DB user password'
-PGDB_HOST = 'DB host'
-PGDB_PORT = 'DB port'
+PSQL_NAME_DB = 'Postgres DB name'
+PSQL_USER = 'DB username'
+PSQL_PASSWORD = 'DB user password'
+PSQL_HOST = 'DB host'
+PSQL_PORT = 'DB port'
+
+WEATHER_API_KEY = 'Enter your API key from https://api.openweathermap.org'
+EVENTS_PLACE = 'Enter you town from list below'
+'''
+spb - Санкт-Петербург
+msk - Москва
+nsk - Новосибирск
+ekb - Екатеринбург
+nnv - Нижний Новгород
+kzn - Казань
+vbg - Выборг
+smr - Самара
+krd - Краснодар
+sochi - Сочи
+ufa - Уфа
+krasnoyarsk - Красноярск
+kev - Киев
+new-york - Нью-Йорк
+'''

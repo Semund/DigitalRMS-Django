@@ -8,8 +8,11 @@ Replace it with yours when starting the project in production.
 '''
 SECRET_KEY = 'django-insecure-+s)ggd)xpz_fir7i52$^7y@$+a(-+noq()trgg&lhu#8q@!3da'
 
-PGDB_NAMEDB = 'Postgres DB name'
-PGDB_USER = 'DB username'
-PGDB_PASSWORD = 'DB user password'
-PGDB_HOST = 'DB host'
-PGDB_PORT = 'DB port'
+PSQL_NAME_DB = 'Postgres DB name'
+PSQL_USER = 'DB username'
+PSQL_PASSWORD = 'DB user password'
+PSQL_HOST = 'DB host'
+PSQL_PORT = 'DB port'
+
+REDIS_HOST = 'redis host'
+REDIS_PORT = redis port (integer format)

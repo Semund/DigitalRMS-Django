@@ -1,10 +1,11 @@
+import requests
 from datetime import datetime, timedelta
 
-import requests
 from django.conf import settings
 from django.core.management import BaseCommand
 
 from main.models import Event
+from webportal.settings_local import EVENTS_PLACE
 
 
 class Command(BaseCommand):
@@ -12,7 +13,7 @@ class Command(BaseCommand):
     EVENTS_API_URL = 'https://kudago.com/public-api/v1.4/events/'
 
     request_parameters = {
-        'location': 'spb',
+        'location': EVENTS_PLACE,
         'page_size': 100,
         'text_format': 'text',
         'fields': 'dates,title,short_title,slug,place,description,images,site_url',
