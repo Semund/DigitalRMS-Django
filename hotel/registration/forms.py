@@ -1,3 +1,4 @@
+import django.db
 from django import forms
 
 from .models import Booking, Guest, Room
@@ -26,10 +27,15 @@ class BookingForm(forms.ModelForm):
         self.fields['room'].empty_label = 'Номер не выбран'
 
     class Meta:
+        try:
+            room_choices = tuple(Room.objects.all())
+        except django.db.ProgrammingError:
+            room_choices = ('DB not created',)
+
         model = Booking
         fields = ('checkin_date', 'checkout_date', 'room')
         widgets = {
             'checkin_date': forms.DateInput(attrs={'max': "9999-12-12", 'class': 'form-control', 'type': 'date'}),
             'checkout_date': forms.DateInput(attrs={'max': "9999-12-12", 'class': 'form-control', 'type': 'date'}),
-            'room': forms.Select(attrs={'class': 'form-control', 'type': 'text'}, choices=tuple(Room.objects.all()))
+            'room': forms.Select(attrs={'class': 'form-control', 'type': 'text'}, choices=room_choices)
         }

@@ -2,7 +2,6 @@ venv/
 .idea
 __pycache__
 /design/
-/hotel/hotel/settings_local.py
-/webportal/webportal/settings_local.py
 env/
 .DS_Store
+keys

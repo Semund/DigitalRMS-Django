@@ -2,10 +2,10 @@ from django.db import models
 
 
 class Room(models.Model):
-    number = models.CharField(verbose_name='Номер', max_length=5)
+    room = models.CharField(verbose_name='Номер', max_length=5)
 
     def __str__(self):
-        return f'Номер {self.number}'
+        return f'Номер {self.room}'
 
     class Meta:
         app_label = 'registration'
