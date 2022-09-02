@@ -15,8 +15,10 @@ services:
       - hotel_db
 
   hotel_db:
-    image: postgres:14.5
+    image: postgres:14.5-alpine
     container_name: hotel_db
+    volumes:
+      - hotel_db:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=hotel
       - POSTGRES_PASSWORD=hotel
@@ -38,15 +40,22 @@ services:
       - portal_db
 
   portal_db:
-    image: postgres:14.5
+    image: postgres:14.5-alpine
     container_name: portal_db
+    volumes:
+      - portal_db:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=portal
       - POSTGRES_PASSWORD=portal
       - POSTGRES_DB=portal_db
     ports:
       - "30432:5432"
+
   hotel_channels:
-    image: redis:7.0
+    image: redis:7.0-alpine
     ports:
       - "6379:6379"
+
+volumes:
+  hotel_db:
+  portal_db:

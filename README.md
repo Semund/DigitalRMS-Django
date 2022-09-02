@@ -45,3 +45,40 @@
 
 3) `webportal/room_control` - сервис управления светом и климатом в номере. Реализован функционал:
     * Сигналы управления системами отправляются на API `hotel/room_automation` без участия сервера с помощью функций JS `fetch` и `XMLHttpRequest`;
+
+
+## Установка
+
+1) Скачать проект:
+    ```shell
+    git clone https://github.com/Semund/DigitalRMS-Django.git && cd ./DigitalRMS-Django
+    ```
+
+2) В случае необходимости откорректировать настройки и переменные окружения в следующих файлах:
+   * `docker-compose.yml`
+   * `hotel/.env.dev`
+   * `webportal/.env.dev`
+
+
+3) Выполнить сборку и запуск проекта:
+    ```shell
+    docker-compose up -d --build
+    ```
+
+4) Запустить миграции для сервера `hotel`: 
+    ```shell
+    docker exec -ti hotel_django python manage.py migrate
+    ```
+    для `webportal`:
+    ```shell
+    docker exec -ti portal_django python manage.py migrate
+    ```
+
+5) Перезапустить контейнер сервера `hotel`:
+    ```shell
+    docker-compose stop hotel && docker-compose start hotel
+    ```
+    для `webportal`:
+    ```shell
+    docker-compose stop portal && docker-compose start portal
+    ```
